@@ -1,0 +1,28 @@
+{
+  "name": "tmfrstn/id4me",
+  "type": "typo3-cms-extension",
+  "description": "Authentication via ID4me",
+  "authors": [
+    {
+      "name": "Cloudfest Hackathon Team",
+      "email": "feuerstein.rhp@gmail.com"
+    }
+  ],
+  "keywords": [
+    "TYPO3",
+    "extension",
+    "id4me"
+  ],
+  "homepage": "http://typo3.org",
+  "license": ["GPL-2.0+"],
+  "version": "0.0.1",
+  "require": {
+    "id4me/id4me-rp": "^0.1.0",
+    "typo3/cms-core": "^9.5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "TmFrstn\\Id4me\\": "Classes"
+    }
+  }
+}

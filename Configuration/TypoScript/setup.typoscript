@@ -1,0 +1,7 @@
+plugin.tx_id4me {
+    view {
+        templateRootPaths.0 = {$plugin.tx_id4me.view.templateRootPath}
+        partialRootPaths.0 = {$plugin.tx_id4me.view.partialRootPath}
+        layoutRootPaths.0 = {$plugin.tx_id4me.view.layoutRootPath}
+    }
+}
