@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2019-03-24T09:26:18Z" product-name="id4me">
+        <header/>
+        <body>
+            <trans-unit id="pi1_title" xml:space="preserve">
+				<source>ID4me authentication</source>
+			</trans-unit>
+        </body>
+    </file>
+</xliff>
