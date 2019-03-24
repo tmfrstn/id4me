@@ -1,0 +1,13 @@
+mod.wizards.newContentElement.wizardItems.plugins {
+	elements {
+		id4me {
+			iconIdentifier = ext-id4me-extension
+			title = LLL:EXT:news/Resources/Private/Language/locallang_be.xlf:pi1_title
+			description = LLL:EXT:news/Resources/Private/Language/locallang_be.xlf:pi1_plus_wiz_description
+			tt_content_defValues {
+				CType = list
+				list_type = id4me_pi1
+			}
+		}
+	}
+}

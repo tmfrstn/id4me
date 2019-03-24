@@ -6,6 +6,13 @@
             <trans-unit id="pi1_title" xml:space="preserve">
 				<source>ID4me authentication</source>
 			</trans-unit>
+            <trans-unit id="pi1_plus_wiz_description" xml:space="preserve">
+				<source>Use ID4me authentication to Login FE-User</source>
+			</trans-unit>
+            <trans-unit id="" xml:space="preserve">
+				<source></source>
+			</trans-unit>
+
         </body>
     </file>
 </xliff>
