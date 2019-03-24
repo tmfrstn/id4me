@@ -18,12 +18,14 @@ class LoginController extends ActionController implements LoggerAwareInterface
      */
     private $id4Me = null;
 
-    private $requestFactory = null;
+#    private $requestFactory = null;
+    private $httpClient = null;
 
     public function initializeAction()
     {
         /** @var \TYPO3\CMS\Core\Http\RequestFactory $requestFactory */
-        $this->requestFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Http\RequestFactory::class);
+#        $this->requestFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Http\RequestFactory::class);
+        $this->httpClient = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Http\RequestFactory::class);
         $this->id4Me = new Service();
     }
 
@@ -54,6 +56,16 @@ class LoginController extends ActionController implements LoggerAwareInterface
         );
         \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($accessTokens);
 
+    }
+
+    /**
+     * Set current http client to another value
+     *
+     * @param Client $httpClient
+     */
+    public function setHttpClient(Client $httpClient)
+    {
+        $this->httpClient = $httpClient;
     }
 
 }
