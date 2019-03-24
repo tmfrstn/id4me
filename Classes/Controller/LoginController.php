@@ -7,5 +7,9 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class LoginController extends ActionController implements LoggerAwareInterface
 {
+    public function formAction()
+    {
+
+    }
 
 }
