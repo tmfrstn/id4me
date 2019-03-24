@@ -16,56 +16,82 @@ class LoginController extends ActionController implements LoggerAwareInterface
     /**
      * @var \Id4me\RP\Service
      */
-    private $id4Me = null;
+    private $id4Me = NULL;
 
-#    private $requestFactory = null;
-    private $httpClient = null;
+    /**
+     * UriBuilder
+     *
+     * @var \TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder
+     * @inject
+     */
+    protected $uriBuilder = NULL;
+
+    protected $identifier = 'idtest1.domainid.community';
 
     public function initializeAction()
     {
-        /** @var \TYPO3\CMS\Core\Http\RequestFactory $requestFactory */
-#        $this->requestFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Http\RequestFactory::class);
-        $this->httpClient = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Http\RequestFactory::class);
         $this->id4Me = new Service();
     }
 
     public function formAction()
     {
-        $identifier = 'idtemp2.id4me.family';
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($identifier);
-        $authorityName = $this->id4Me->discover($identifier);
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($authorityName);
-        $openIdConfig = $this->id4Me->getOpenIdConfig($authorityName);
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($openIdConfig);
+        $openIdConfig = $this->provideOpenIdConfig();
+
         $client = $this->id4Me->register(
             $openIdConfig,
-            $identifier,
-            sprintf('http://www.rezepte-elster.de/id4me.php', $identifier)
+            $this->identifier,
+            sprintf('https://id4me.tmfrstn.de/login/', $this->identifier)
         );
+
         \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($client);
+
         $authorizationUrl = $this->id4Me->getAuthorizationUrl(
-            $openIdConfig, $client->getClientId(), $identifier, $client->getActiveRedirectUri(), 'idtemp2.id4me.family'
+            $openIdConfig,
+            $client->getClientId(),
+            $this->identifier,
+            $client->getActiveRedirectUri(),
+            'https://id4me.tmfrstn.de/'
         );
+
+        $GLOBALS['TSFE']->fe_user->setKey("ses","clientId",$client->getClientId());
+        $GLOBALS['TSFE']->fe_user->setKey("ses","clientSecret",$client->getClientSecret());
+        $GLOBALS['TSFE']->storeSessionData();
+
         \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($authorizationUrl);
+
+        $this->redirectToURI($authorizationUrl);
+
+    }
+
+    public function authenticateAction()
+    {
+
+        $clientId = $GLOBALS['TSFE']->fe_user->getKey('ses', 'clientId');
+        $clientSecret = $GLOBALS['TSFE']->fe_user->getKey('ses', 'clientSecret');
+
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($clientId);
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($clientSecret);
+
+        $openIdConfig = $this->provideOpenIdConfig();
+
         $accessTokens = $this->id4Me->getAccessTokens(
             $openIdConfig,
-            readline('code:'),
-            sprintf('http://www.rezepte-elster.de/id4me.php', $identifier),
-            $client->getClientId(),
-            $client->getClientSecret()
+            'WU9ZOZGC0DgzS9blLECd',
+            sprintf('https://id4me.tmfrstn.de/', $this->identifier),
+            $clientId,
+            $clientSecret
         );
         \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($accessTokens);
-
     }
 
-    /**
-     * Set current http client to another value
-     *
-     * @param Client $httpClient
-     */
-    public function setHttpClient(Client $httpClient)
+    private function provideOpenIdConfig()
     {
-        $this->httpClient = $httpClient;
-    }
+        $authorityName = $this->id4Me->discover($this->identifier);
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($authorityName);
 
+        $openIdConfig = $this->id4Me->getOpenIdConfig($authorityName);
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($openIdConfig);
+
+        return $openIdConfig;
+    }
 }

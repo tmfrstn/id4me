@@ -6,10 +6,10 @@ $boot = function () {
         'TmFrstn.id4me',
         'Pi1',
         [
-            'Login' => 'form,login',
+            'Login' => 'form,authenticate',
         ],
         [
-            'Login' => 'form,login',
+            'Login' => 'form,authenticate',
         ]
     );
 
