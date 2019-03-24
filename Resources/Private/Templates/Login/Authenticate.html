@@ -1,0 +1,12 @@
+<f:layout name="Default"/>
+
+<f:section name="main">
+    <f:if condition="{id4meError}">
+        <div class="alert alert-dismissible fade show alert-danger" role="alert">
+            <p><f:translate key="auth0.error.{id4meError}">{id4meErrorDescription}</f:translate></p>
+            <button class="close" type="button" data-dismiss="alert" aria-labelledby="{f:translate(key: 'id4me.alert.label.close')}">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </f:if>
+</f:section>
